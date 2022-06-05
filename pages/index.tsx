@@ -23,10 +23,12 @@ const Home: NextPage = () => {
       <Link href={"/schedule"}>
         <div className="rounded p-4 bg-slate-600 text-white w-40 text-center mx-auto">Full Schedule</div>
       </Link>
-      <Container>       
-        <GoalBoard>Water</GoalBoard>
-        <GoalBoard>Water</GoalBoard>
-        <GoalBoard>Water</GoalBoard>
+      <Container>
+        <div className="flex justify-betwee rounded flex-row">      
+          <GoalBoard>Water</GoalBoard>
+          <GoalBoard>Goals</GoalBoard>
+          <GoalBoard>Groceries</GoalBoard>
+        </div>
       </Container>
     </Container>
   );
