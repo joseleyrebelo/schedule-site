@@ -15,8 +15,7 @@ const InitialContextData = {
   assertSchedule: () => {},
 };
 
-export const ScheduleContext =
-  createContext<ScheduleContext>(InitialContextData);
+const ScheduleContext = createContext<ScheduleContext>(InitialContextData);
 
 export const ScheduleContextProvider = ({ children }: ContextProps) => {
   const [schedule, setSchedule] = useState({});
@@ -36,3 +35,5 @@ export const ScheduleContextProvider = ({ children }: ContextProps) => {
     </ScheduleContext.Provider>
   );
 };
+
+export default ScheduleContext;

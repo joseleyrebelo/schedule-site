@@ -20,3 +20,5 @@ export type Weekdays =
   | "Friday"
   | "Saturday"
   | "Sunday";
+
+export type ArrayDate = [number, Months, number];

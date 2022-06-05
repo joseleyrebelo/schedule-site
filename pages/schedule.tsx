@@ -3,8 +3,8 @@ import type { NextPage } from "next";
 import { useContext } from "react";
 import Container from "../components/Container";
 import Header from "../components/Header";
-import MonthGrid from "../components/MonthGrid";
-import { ScheduleContext } from "../contexts/ScheduleContext";
+import MonthBlock from "../components/MonthBlock";
+import ScheduleContext from "../contexts/ScheduleContext";
 import { Schedule } from "../types/schedule";
 
 type ScheduleProps = {
@@ -32,7 +32,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
       <div className="grid grid-cols-2 gap-20">
         <div className="col-span-2 md:col-span-1">
           June
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="June"
             startingWeekDay="Wednesday"
@@ -41,7 +41,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           July
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="July"
             startingWeekDay="Friday"
@@ -50,7 +50,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           August
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="August"
             startingWeekDay="Monday"
@@ -59,7 +59,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           September
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="September"
             startingWeekDay="Thursday"
@@ -68,7 +68,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           October
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="October"
             startingWeekDay="Saturday"
@@ -77,7 +77,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           November
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="November"
             startingWeekDay="Tuesday"
@@ -86,7 +86,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           December
-          <MonthGrid
+          <MonthBlock
             year={2022}
             month="December"
             startingWeekDay="Thursday"
@@ -96,7 +96,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         2023
         <div className="col-span-2 md:col-span-1">
           January
-          <MonthGrid
+          <MonthBlock
             year={2023}
             month="January"
             startingWeekDay="Sunday"
@@ -105,7 +105,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           March
-          <MonthGrid
+          <MonthBlock
             year={2023}
             month="March"
             startingWeekDay="Tuesday"
@@ -114,7 +114,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           April
-          <MonthGrid
+          <MonthBlock
             year={2023}
             month="April"
             startingWeekDay="Saturday"
@@ -123,7 +123,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           May
-          <MonthGrid
+          <MonthBlock
             year={2023}
             month="May"
             startingWeekDay="Monday"
@@ -132,7 +132,7 @@ const Schedule = ({ schedule }: ScheduleProps) => {
         </div>
         <div className="col-span-2 md:col-span-1">
           June
-          <MonthGrid
+          <MonthBlock
             year={2023}
             month="June"
             startingWeekDay="Thursday"

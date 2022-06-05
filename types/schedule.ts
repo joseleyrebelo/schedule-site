@@ -5,7 +5,7 @@ export type Schedule = {
   [year: number]: {
     [month in Months]?: {
       [day: number]: {
-        type: TaskTypes;
+        type: string;
         description: string;
       }[];
     };

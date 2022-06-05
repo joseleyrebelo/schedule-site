@@ -8,9 +8,12 @@ export default function handler(
   res: NextApiResponse<Schedule>
 ) {
   const schedule = {
-    2020: {
+    2022: {
       June: {
-        1: [{ type: TaskTypes.bills, description: "Pay rent" }],
+        1: [{ type: "bills", description: "Pay rent" }],
+      },
+      July: {
+        15: [{ type: "out", description: "Pay rent" }],
       },
     },
   };
