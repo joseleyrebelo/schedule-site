@@ -1,14 +1,18 @@
+import Link from "next/link";
+import { Months } from "../types/dates";
+
 type MonthCell = {
   value?: number;
+  link?: [number, Months, number];
 };
-const MonthCell = ({ value }: MonthCell) => {
+const MonthCell = ({ value, link }: MonthCell) => {
   return (
     <div
       className={`rounded aspect-square flex items-center justify-center ${
-        value ? "bg-white" : " bg-slate-100"
+        value ? (link ? "bg-red-300" : "bg-white") : " bg-slate-100"
       }`}
     >
-      {value}
+      {link ? <Link href={`/day?date=${link.join("-")}`}>{value}</Link> : value}
     </div>
   );
 };
