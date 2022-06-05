@@ -12,7 +12,7 @@ const MonthCell = ({ value, link }: MonthCell) => {
   return (
     <div
       className={
-        `rounded aspect-square flex items-center justify-center border border-slate-400 ` +
+        `rounded aspect-square border border-slate-400 ` +
         `border-slate-300 ${
           hasHover
             ? hasContent
@@ -26,10 +26,14 @@ const MonthCell = ({ value, link }: MonthCell) => {
     >
       {link ? (
         <Link href={`/day?date=${link.join("-")}`}>
-          <span>{value}</span>
+          <div className="h-full w-full flex items-center justify-center  ">
+            {value}
+          </div>
         </Link>
       ) : (
-        value
+        <div className="h-full w-full flex items-center justify-center  ">
+          {value}
+        </div>
       )}
     </div>
   );

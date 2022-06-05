@@ -10,10 +10,14 @@ export default function handler(
   const schedule = {
     2022: {
       June: {
-        1: [{ type: "bills", description: "Pay rent" }],
+        1: [
+          { type: "bills", description: "Pay rent" },
+          { type: "bills", description: "Pay rent 2" },
+        ],
       },
       July: {
         15: [{ type: "out", description: "Pay rent" }],
+        18: [{ type: "out", description: "Pay rent" }],
       },
     },
   };
