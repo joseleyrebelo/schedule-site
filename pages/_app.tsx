@@ -4,9 +4,12 @@ import { ScheduleContextProvider } from "../contexts/ScheduleContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ScheduleContextProvider>
-      <Component {...pageProps} />;
-    </ScheduleContextProvider>
+    // TODO - temp - remove classes ??
+    <div className="bg-gray-900 text-white min-h-screen">
+      <ScheduleContextProvider>
+        <Component {...pageProps} />;
+      </ScheduleContextProvider>
+    </div>
   );
 }
 

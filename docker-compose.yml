@@ -1,0 +1,21 @@
+version: "3.8"
+
+networks:
+  frontend:
+
+services:
+  next_js:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: next_dev
+    command: yarn dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000:3000
+    stdin_open: true
+    networks:
+      - frontend
