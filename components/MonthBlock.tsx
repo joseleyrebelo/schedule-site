@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import ScheduleContext from "../contexts/ScheduleContext";
 import { Months, Weekdays } from "../types/dates";
-import MonthCell from "./MonthCell";
+import MonthCell from "./month/MonthCell";
 import MonthWeekDay from "./MonthWeekDay";
 
 type MonthBlock = {
@@ -18,34 +18,32 @@ const MonthBlock = ({
   monthDays,
 }: MonthBlock) => {
   const { schedule } = useContext(ScheduleContext);
+
+  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const monthTasks = schedule[year]?.[month];
-  console.log(schedule);
+  const startingWeekDaySet = [...Array(startingWeekDay)];
+  const monthDaysSet = [...Array(monthDays)];
+
   return (
     <div className="grid grid-cols-7">
-      {/* TODO - make this a for loop  */}
-      <MonthWeekDay name="Mon" key="weekDayMon" />
-      <MonthWeekDay name="Tue" key="weekDayTue" />
-      <MonthWeekDay name="Wed" key="weekDayWed" />
-      <MonthWeekDay name="Thu" key="weekDayThu" />
-      <MonthWeekDay name="Fri" key="weekDayFri" />
-      <MonthWeekDay name="Sat" key="weekDaySat" />
-      <MonthWeekDay name="Sun" key="weekDaySun" />
-      {[...Array(startingWeekDay)].map((noValue, index) => (
+      {weekdays.map((item) => (
+        <MonthWeekDay name={item} key={"weekDay" + item} />
+      ))}
+      {startingWeekDaySet.map((empty, index) => (
         <MonthCell key={"empty" + index} />
       ))}
-      {[...Array(monthDays)].map((noValue, dayFrom0) => (
-        <MonthCell
-          key={"day" + dayFrom0}
-          value={dayFrom0 + 1}
-          link={
-            monthTasks
-              ? monthTasks[dayFrom0 + 1]
-                ? [year, month, dayFrom0 + 1]
-                : undefined
-              : undefined
-          }
-        />
-      ))}
+      {monthDaysSet.map((empty, dayFrom0) => {
+        const link = monthTasks
+          ? monthTasks[dayFrom0 + 1]
+            ? [year, month, dayFrom0 + 1]
+            : null
+          : null;
+        return (
+          <MonthCell key={"day" + dayFrom0} link={link}>
+            {dayFrom0 + 1}
+          </MonthCell>
+        );
+      })}
     </div>
   );
 };

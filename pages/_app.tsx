@@ -5,9 +5,9 @@ import { ScheduleContextProvider } from "../contexts/ScheduleContext";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     // TODO - temp - remove classes ??
-    <div className="bg-gray-900 text-white min-h-screen">
+    <div className="bg-cyan-50 text-gray-700 min-h-screen">
       <ScheduleContextProvider>
-        <Component {...pageProps} />;
+        <Component {...pageProps} />
       </ScheduleContextProvider>
     </div>
   );

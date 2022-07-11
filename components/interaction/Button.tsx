@@ -8,6 +8,7 @@ const Button = ({ children, onClick, isActive }: ButtonProps) => {
   return (
     <button
       className={
+        `min-h-[46px] text-[13px] ` +
         `text-orange-500 bg-orange-100 border border-orange-300  ` +
         `p-2 px-4 rounded-lg ` +
         `hover:scale-105 transition-transform ` +
