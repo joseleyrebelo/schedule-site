@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Schedule } from "../../types/schedule";
 import { TaskTypes } from "../../types/tasks";
 
+// @deprecated 
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Schedule>

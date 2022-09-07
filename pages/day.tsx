@@ -3,7 +3,7 @@ import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import Container from "../components/Container";
 import Task from "../components/Task";
-import Header from "../components/Header";
+import Header from "../components/layout/Header";
 import MonthBlock from "../components/MonthBlock";
 import { ArrayDate, Months } from "../types/dates";
 import { Schedule } from "../types/schedule";
@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   try {
     schedule = (await axios.get("http://localhost:3000/api/schedule")).data;
   } catch (error) {
-    // Todo : Handle error
+    // @todo : Handle error
     return redirectHome;
   }
   if (date) {

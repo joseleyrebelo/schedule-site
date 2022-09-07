@@ -1,14 +1,15 @@
+import ScheduleContext from "contexts/ScheduleContext";
+import { Moment } from "moment";
 import Link from "next/link";
-import React from "react";
-import { ArrayDate, Months } from "../../types/dates";
+import React, { useContext } from "react";
 
-interface MonthCell {
+interface MonthCellProps {
   children?: React.ReactNode;
-  link?: ArrayDate;
+  date?: Moment
   onClick?: () => void;
 }
 
-const MonthCellInner = ({ children, onClick }: Omit<MonthCell, "link">) => (
+const MonthCellInner = ({ children, onClick }: MonthCellProps) => (
   <div
     {...{ onClick }}
     className="h-full w-full flex items-center justify-center"
@@ -17,9 +18,24 @@ const MonthCellInner = ({ children, onClick }: Omit<MonthCell, "link">) => (
   </div>
 );
 
-const MonthCell = ({ children, link, onClick }: MonthCell) => {
-  const isActive = !!children;
-  const hasAction = !!link || !!onClick;
+const MonthCell = (props: MonthCellProps) => {
+  const { date, onClick } = props
+  const { schedule } = useContext(ScheduleContext);
+
+  const isActive = !!date;
+  const hasTask = date 
+    ? (schedule[date.year()] && schedule[date.year()][date.month()] && schedule[date.year()][date.month()][date.date()]) 
+    : false;
+  
+  const hasAction = !!hasTask || !!onClick;
+
+  const link = date && hasTask 
+    ?  `/day?date=${[date.year(),date.month(),date.date()].join("-")}`
+    : null;
+  
+  console.log()
+
+
 
   return (
     <div
@@ -33,11 +49,11 @@ const MonthCell = ({ children, link, onClick }: MonthCell) => {
       }
     >
       {link ? (
-        <Link href={`/day?date=${link.join("-")}`}>
-          <MonthCellInner {...onClick}>{children}</MonthCellInner>
+        <Link href={link}>
+          <MonthCellInner {...onClick}>{date?.date()}</MonthCellInner>
         </Link>
       ) : (
-        <MonthCellInner {...onClick}>{children}</MonthCellInner>
+        <MonthCellInner {...onClick}>{date?.date()}</MonthCellInner>
       )}
     </div>
   );

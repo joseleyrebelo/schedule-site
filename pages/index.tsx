@@ -1,35 +1,20 @@
+import SelectInput from "components/interaction/SelectInput";
+import EmptyBounds from "components/ponds/EmptyBounds";
+import { BondsContext } from "contexts/BondsContext";
+import { get_all_bounds_fixture } from "fixtures/homepage";
 import type { NextPage } from "next";
-import Link from "next/link";
-import Container from "../components/Container";
-import GoalBoard from "../components/GoalBoard";
-import Header from "../components/Header";
-import TaskBoard from "../components/TaskBoard";
-import Title from "../components/typography/Title";
+import { useContext } from "react";
 
 const Home: NextPage = () => {
+  const bounds: Bound[] = get_all_bounds_fixture();
+  const currentBound: Bound = get_all_bounds_fixture()[0];
+  const bonds = ["asda"];
+
+  useContext(BondsContext).assertData({bonds, bounds})
+
   return (
-    <>
-      <Header />
-      <Container>
-        <Title>Resume</Title>
-        <Container>
-          <TaskBoard>Task number 1</TaskBoard>
-          <TaskBoard>Task number 1</TaskBoard>
-          <TaskBoard>Task number 1</TaskBoard>
-        </Container>
-        <Title>Goals</Title>
-        <Link href={"/schedule"}>
-          <div className="rounded p-4 bg-slate-600 text-white w-40 text-center mx-auto">
-            Full Schedule
-          </div>
-        </Link>
-        <div className="flex justify-betwee rounded flex-row">
-          <GoalBoard>Water</GoalBoard>
-          <GoalBoard>Goals</GoalBoard>
-          <GoalBoard>Groceries</GoalBoard>
-        </div>
-      </Container>
-    </>
+    // @todo abstract into layout ?
+    
   );
 };
 

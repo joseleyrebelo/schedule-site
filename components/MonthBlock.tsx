@@ -1,3 +1,4 @@
+import moment from "moment";
 import { useContext } from "react";
 import ScheduleContext from "../contexts/ScheduleContext";
 import { Months, Weekdays } from "../types/dates";
@@ -7,21 +8,18 @@ import MonthWeekDay from "./MonthWeekDay";
 type MonthBlock = {
   year: number;
   month: Months;
-  monthDays: number;
-  startingWeekDay: Weekdays;
 };
 
 const MonthBlock = ({
   year,
   month,
-  startingWeekDay,
-  monthDays,
 }: MonthBlock) => {
-  const { schedule } = useContext(ScheduleContext);
+  const dateOfMonthsFirst = moment(`1 ${month} ${year}`);
+  const startingWeekDay = dateOfMonthsFirst.weekday() - 1;
+  const monthDays = dateOfMonthsFirst.daysInMonth();
 
   const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const monthTasks = schedule[year]?.[month];
-  const startingWeekDaySet = [...Array(startingWeekDay)];
+  const nonMonDaysSet = startingWeekDay > 0 ? [...Array(startingWeekDay)] : [];
   const monthDaysSet = [...Array(monthDays)];
 
   return (
@@ -29,19 +27,14 @@ const MonthBlock = ({
       {weekdays.map((item) => (
         <MonthWeekDay name={item} key={"weekDay" + item} />
       ))}
-      {startingWeekDaySet.map((empty, index) => (
+      {nonMonDaysSet.map((empty, index) => (
         <MonthCell key={"empty" + index} />
       ))}
-      {monthDaysSet.map((empty, dayFrom0) => {
-        const link = monthTasks
-          ? monthTasks[dayFrom0 + 1]
-            ? [year, month, dayFrom0 + 1]
-            : null
-          : null;
+      {monthDaysSet.map((empty, dayFromZeroOn) => {
+        const dayFromOneOn = dayFromZeroOn + 1;
+        const dayDate = moment(`${dayFromOneOn} ${month} ${year}`);
         return (
-          <MonthCell key={"day" + dayFrom0} link={link}>
-            {dayFrom0 + 1}
-          </MonthCell>
+          <MonthCell key={"day" + dayFromZeroOn} date={dayDate}/>
         );
       })}
     </div>

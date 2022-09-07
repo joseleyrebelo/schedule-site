@@ -1,50 +1,45 @@
-import axios from "axios";
 import Label from "components/typography/Label";
 import type { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
 import Button from "../components/interaction/Button";
 import Container from "../components/Container";
-import Header from "../components/Header";
+import Header from "../components/layout/Header";
 import Input from "components/interaction/Input";
 import SelectInput from "components/interaction/SelectInput";
 import ShuffleInput from "components/interaction/ShuffleInput";
-import { __scout } from "helpers/_dev";
+import { ___scout___ } from "helpers/_dev";
+import DevIcon from "components/_dev/DevIcon";
+import { getDBHelper } from "helpers/db";
+import { DBApiResponse } from "types/db";
+import { randomDate } from "helpers/misc";
+import DateAsText from "components/DateAsText";
+import { Task } from "types/tasks";
 
 type AddPageProps = {
-  tasks: [] | [[date: string, type: string, description: string]];
+  tasks: Task[];
 };
 
 const AddPage = ({ tasks }: AddPageProps) => {
+  const db = getDBHelper();
   const [isReadyForSubmit, setIsReadyForSubmit] = useState(false);
-  const [date, setDate] = useState("");
-  const [type, setType] = useState("");
-  const [description, setDescription] = useState("");
-  const [result, setResult] = useState(tasks || []);
+  const [date, setDate] = useState<string>("");
+  const [type, setType] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [result, setResult] = useState<Task[]>(tasks || []);
 
-  //TODO - move to correct folder
-  function randomDate(start: Date, end: Date) {
-    return new Date(
-      start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    );
-  }
-
-  const submit = () => {
+  const addTask = () => {
     if (!isReadyForSubmit) return;
-
-    axios
-      .post("http://localhost:8000/api/add", {
-        date,
-        type,
-        description,
-      })
-      .then(function (response: { data: [] }) {
-        setResult(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    console.log(date)
+    db.addTask(date, type, description)
+      .then((response: DBApiResponse) => setResult(___scout___(response.data)))
+      .catch(error => console.log(error));
   };
-
+  const deleteEntry = (targetId: number) => {
+    console.log(targetId);
+    db.deleteTask(targetId)
+      .then(() => setResult(result.filter(({id}) => id !== targetId)))
+      .catch(error => console.log(error));
+  }
   useEffect(() => {
     if (date.length > 0 && type.length > 0 && description.length > 0) {
       setIsReadyForSubmit(true);
@@ -75,25 +70,30 @@ const AddPage = ({ tasks }: AddPageProps) => {
           </div>
           <div className="col-span-2">
             <ShuffleInput
-              shuffler={() =>
-                __scout(randomDate(new Date(2012, 0, 1), new Date())).toString()
+              shuffler={() => {
+                  let shuffledDate = randomDate(new Date(2022, 7, 1), new Date(2022, 10, 1));
+                  return [shuffledDate.toISOString(), shuffledDate.toString()]
+                }
               }
               onShuffle={(value) => setDate(value)}
               placeholder="Date"
             />
           </div>
           <div className="col-span-2 h-full flex items-end ">
-            <Button isActive={isReadyForSubmit} onClick={submit}>
+            <Button isActive={isReadyForSubmit} onClick={addTask}>
               Add task
             </Button>
           </div>
         </div>
         <div className="my-4 p10 rounded-lg grid grid-cols-12 gap-4">
-          {result.map(([date, name, description], index) => (
+          {result.map(({id, date, name, description}, index) => (
             <div className="col-span-3 " key={index}>
-              <div className="h-full rounded-lg border p-6 pt-14">
+              <div className="h-full rounded-lg border p-6 pt-14 relative">
+                <DevIcon onClick={() => deleteEntry(id)} className="top-7 right-6" />
                 <div className="relative">
-                  <Label className="absolute -top-7 left-0">{date}</Label>
+                  <Label className="absolute -top-7 left-0">
+                    <DateAsText date={date}/>
+                  </Label>
                   <b>{name}</b>
                   <br />
                   {description}
@@ -108,17 +108,18 @@ const AddPage = ({ tasks }: AddPageProps) => {
   );
 };
 
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   try {
-//     const tasks = await axios.post("http://localhost:8000/api/get", {});
-//     return {
-//       props: {
-//         tasks,
-//       },
-//     };
-//   } catch (error) {
-//     return { notFound: true };
-//   }
-// };
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const db = getDBHelper();
+    const tasks = (await (db.getTasks())).data
+    return {
+      props: {
+        tasks,
+      },
+    };
+  } catch (error) {
+    return { notFound: true };
+  }
+};
 
 export default AddPage;
